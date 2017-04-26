@@ -78,6 +78,9 @@ class GiellaKeyboard: KeyboardViewController {
     
     override func viewDidLoad() {
         self.configure(with: generatedKeyboard())
+        
+        print(it_works())
+        
         super.viewDidLoad()
     }
     

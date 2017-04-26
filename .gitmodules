@@ -1,0 +1,3 @@
+[submodule "hfst-ospell-rs"]
+	path = hfst-ospell-rs
+	url = https://github.com/bbqsrc/hfst-ospell-rs.git
