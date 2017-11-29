@@ -174,8 +174,6 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     override open func viewDidLoad() {
-        super.viewDidLoad()
-
         if let banner = createBanner() {
             banner.isHidden = true
             view.insertSubview(banner, belowSubview: forwardingView)
@@ -193,6 +191,8 @@ open class KeyboardViewController: UIInputViewController {
             multiplier: 0.0,
             constant: h
         )
+        
+        super.viewDidLoad()
     }
 
     override open func viewWillAppear(_ animated: Bool) {
