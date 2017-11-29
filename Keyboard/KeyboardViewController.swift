@@ -174,14 +174,30 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     override open func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupLayout()
+    }
+    
+    func initBanner() {
+        if bannerView != nil {
+            return
+        }
+        
         if let banner = createBanner() {
-            banner.isHidden = true
+            banner.isHidden = false
             view.insertSubview(banner, belowSubview: forwardingView)
             bannerView = banner
         }
+    }
+    
+    func initHeightConstraint() {
+        if heightConstraint != nil {
+            return
+        }
         
         let h = heightForOrientation(orientation, withTopBanner: true)
-        
+
         heightConstraint = NSLayoutConstraint(
             item: view,
             attribute: .height,
@@ -191,22 +207,24 @@ open class KeyboardViewController: UIInputViewController {
             multiplier: 0.0,
             constant: h
         )
-        
-        super.viewDidLoad()
     }
-
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.bannerView?.isHidden = false
+    
+    func ohNo() {
+        initBanner()
+        initHeightConstraint()
         
         self.heightConstraint.constant = self.heightForOrientation(self.orientation, withTopBanner: true)
         
         view.addConstraint(heightConstraint)
+        // view.setNeedsUpdateConstraints()
+    }
+
+    override open func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.ohNo()
+        }
         
-        setupLayout()
-        
-        view.setNeedsUpdateConstraints()
+        super.viewWillAppear(animated)
     }
     
     override open func viewWillDisappear(_ animated: Bool) {
