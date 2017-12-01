@@ -213,11 +213,14 @@ open class KeyboardViewController: UIInputViewController {
         )
     }
     
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
+    func updateHeightConstraint() {
         initHeightConstraint()
         self.heightConstraint.constant = self.heightForOrientation(self.orientation, withTopBanner: true)
+    }
+    
+    open override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHeightConstraint()
     }
     
     func ohNo() {
@@ -290,7 +293,8 @@ open class KeyboardViewController: UIInputViewController {
         let height = screenHeight.truncatingRemainder(dividingBy: 3)
         
         let topBannerHeight = withTopBanner ? metric("topBanner") : 0
-        let additionalRowHeight = CGFloat(max(self.keyboard.pages[0].rows.count - 4, 0) * 56)
+        
+        let additionalRowHeight = currentMode == 0 ? CGFloat(max(self.keyboard.pages[0].rows.count - 4, 0) * 56) : 0
         
         return CGFloat(max(height, maxHeight) + topBannerHeight + additionalRowHeight)
     }
@@ -687,6 +691,8 @@ open class KeyboardViewController: UIInputViewController {
         self.shiftStartingState = nil
         self.shiftWasMultitapped = false
 
+        self.updateHeightConstraint()
+        
         let uppercase = self.shiftState.uppercase()
         let characterUppercase = (UserDefaults.standard.bool(forKey: kSmallLowercase) ? uppercase : true)
         self.layout?.layoutKeys(mode, uppercase: uppercase, characterUppercase: characterUppercase, shiftState: self.shiftState)
