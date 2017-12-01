@@ -214,8 +214,14 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     func updateHeightConstraint() {
+        self.view.superview?.layoutIfNeeded()
+        
         initHeightConstraint()
         self.heightConstraint.constant = self.heightForOrientation(self.orientation, withTopBanner: true)
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.superview?.layoutIfNeeded()
+        }
     }
     
     open override func viewWillLayoutSubviews() {
