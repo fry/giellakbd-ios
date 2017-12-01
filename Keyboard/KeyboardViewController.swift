@@ -176,6 +176,10 @@ open class KeyboardViewController: UIInputViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        let dummyView = UILabel(frame: .zero)
+        dummyView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(dummyView)
+        
         setupLayout()
     }
     
@@ -209,23 +213,28 @@ open class KeyboardViewController: UIInputViewController {
         )
     }
     
+    open override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        initHeightConstraint()
+        self.heightConstraint.constant = self.heightForOrientation(self.orientation, withTopBanner: true)
+    }
+    
     func ohNo() {
         initBanner()
         initHeightConstraint()
-        
-        self.heightConstraint.constant = self.heightForOrientation(self.orientation, withTopBanner: true)
-        
         view.addConstraint(heightConstraint)
-        // view.setNeedsUpdateConstraints()
     }
 
     override open func viewWillAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
-            self.ohNo()
-        }
-        
         super.viewWillAppear(animated)
+        self.ohNo()
     }
+    
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
