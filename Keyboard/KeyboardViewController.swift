@@ -229,21 +229,12 @@ open class KeyboardViewController: UIInputViewController {
         updateHeightConstraint()
     }
     
-    func ohNo() {
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         initBanner()
         initHeightConstraint()
         view.addConstraint(heightConstraint)
     }
-
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.ohNo()
-    }
-    
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
