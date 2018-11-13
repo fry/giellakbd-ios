@@ -102,9 +102,9 @@ open class GiellaKeyboard: KeyboardViewController {
         let banner = GiellaBanner(keyboard: self)
         banner.mode = .suggestion
         
-        self.bannerView = banner
-        
-        self.view.insertSubview(self.bannerView!, at: 0)
+//        self.bannerView = banner
+//
+//        self.view.insertSubview(self.bannerView!, at: 0)
         
         super.viewDidLoad()
     }
